@@ -17,21 +17,25 @@
       </tr>
     </thead>
     <tbody>
-      @for (gnome of gnomes; track gnome.POS) {
-        <tr>
-          <td>{{ gnome.CHROM }}</td>
-          <td>{{ gnome.POS }}</td>
-          <td>{{ gnome.REF }}</td>
-          <td>{{ gnome.ALT }}</td>
-          <td>{{ gnome.QUAL }}</td>
-          <td>{{ gnome.FILTER }}</td>
-        </tr>
+      @for (gnome of filteredGnomes; track gnome.POS) {
+      <tr>
+        <td>{{ gnome.CHROM }}</td>
+        <td>{{ gnome.POS }}</td>
+        <td>{{ gnome.REF }}</td>
+        <td>{{ gnome.ALT }}</td>
+        <td>{{ gnome.QUAL }}</td>
+        <td>{{ gnome.FILTER }}</td>
+        <!-- Valores para cada output -->
+        <!-- Valores para cada output -->
+
+      </tr>
       }
     </tbody>
   </table>
-  <!-- Paginacion -->
+
+  <!-- Paginación -->
   <div class="pagination">
     <button>Anterior</button>
     <button>Siguiente</button>
-
+  </div>
 </div>

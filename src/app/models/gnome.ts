@@ -10,5 +10,6 @@ export interface Gnome {
     FILTER: string;
     INFO: string;
     // Índices de salida para diferentes canales/muestras
-    [key: `output_CH${number}`]: string;
+
+    OUTPUTS:{[key: `output_CH${number}`]: string};
   }
