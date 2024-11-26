@@ -12,7 +12,7 @@ export class GenomeService {
 
   constructor(private http: HttpClient) { }
 
-  getGenomes(): Observable<Genome[]> {
-    return this.http.get<Genome[]>(this.apiUrl);
+  getGenomes(page: number = 1, pageSize: number = 10): Observable<Genome[]> {
+    return this.http.get<Genome[]>(`${this.apiUrl}?page=${page}&page_size=${pageSize}`);
   }
 }

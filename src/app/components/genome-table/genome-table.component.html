@@ -1,36 +1,83 @@
-<!-- app.component.html -->
-<input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" style="background-color: #f0f0f0;">
-
-<!-- Contenedor para hacer scroll en la tabla en pantallas pequeñas -->
-<div class="table-responsive">
-    <table class="highlight responsive-table striped bordered">
+<div class="genome-table-container">
+    <!-- Barra de búsqueda -->
+    <div class="search-container">
+      <input 
+        type="text" 
+        [(ngModel)]="searchText" 
+        placeholder="Buscar"
+        class="form-control search-input"
+      >
+    </div>
+  
+    <!-- Indicador de carga -->
+    <div *ngIf="loading" class="loading-container">
+      <p>Cargando datos...</p>
+    </div>
+  
+    <!-- Tabla de genomas -->
+    <div *ngIf="!loading" class="table-responsive">
+      <table class="table table-striped table-hover">
         <thead>
-            <tr>
-                <th>CHROM</th>
-                <th>POS</th>
-                <th>ID</th>
-                <th>REF</th>
-                <th>ALT</th>
-                <th>QUAL</th>
-                <th>FILTER</th>
-                <th>INFO</th>
-                <th *ngFor="let key of objectKeys(genomes[0]?.OUTPUTS || {})">{{ key }}</th>
-            </tr>
+          <tr>
+            <th>CHROM</th>
+            <th>POS</th>
+            <th>ID</th>
+            <th>REF</th>
+            <th>ALT</th>
+            <th>QUAL</th>
+            <th>FILTER</th>
+            <th>INFO</th>
+            <th *ngFor="let key of objectKeys(genomes[0]?.OUTPUTS || {})">
+              {{ key }}
+            </th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let genome of genomes">
-                <td>{{ genome.CHROM }}</td>
-                <td>{{ genome.POS }}</td>
-                <td>{{ genome.ID }}</td>
-                <td>{{ genome.REF }}</td>
-                <td>{{ genome.ALT }}</td>
-                <td>{{ genome.QUAL }}</td>
-                <td>{{ genome.FILTER }}</td>
-                <td>{{ genome.INFO }}</td>
-                <td *ngFor="let key of objectKeys(genome.OUTPUTS)">
-                    {{ genome.OUTPUTS[key] }}
-                </td>
-            </tr>
+          <tr *ngFor="let genome of genomes">
+            <td>{{ genome.CHROM }}</td>
+            <td>{{ genome.POS }}</td>
+            <td>{{ genome.ID }}</td>
+            <td>{{ genome.REF }}</td>
+            <td>{{ genome.ALT }}</td>
+            <td>{{ genome.QUAL }}</td>
+            <td>{{ genome.FILTER }}</td>
+            <td>{{ genome.INFO }}</td>
+            <td *ngFor="let key of objectKeys(genome.OUTPUTS)">
+              {{ genome.OUTPUTS[key] }}
+            </td>
+          </tr>
         </tbody>
-    </table>
-</div>
+      </table>
+    </div>
+  
+    <!-- Controles de paginación -->
+    <div class="pagination-container">
+        <div class="pagination-controls text-center w-100">
+            <button 
+              class="btn btn-pagination" 
+              (click)="changePage(currentPage - 1)" 
+              [disabled]="currentPage === 1"
+            >
+              Anterior
+            </button>
+            <span class="page-number mx-3">Página {{ currentPage }}</span>
+            <button 
+              class="btn btn-pagination" 
+              (click)="changePage(currentPage + 1)"
+            >
+              Siguiente
+            </button>
+          </div>
+  
+      <div class="page-size-selector">
+        <select 
+          class="form-control" 
+          (change)="changePageSize($event)"
+        >
+          <option value="10">10 por página</option>
+          <option value="25">25 por página</option>
+          <option value="50">50 por página</option>
+        </select>
+      </div>
+    </div>
+  </div>
