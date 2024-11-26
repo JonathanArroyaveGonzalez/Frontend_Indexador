@@ -1,0 +1,36 @@
+<!-- app.component.html -->
+<input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" style="background-color: #f0f0f0;">
+
+<!-- Contenedor para hacer scroll en la tabla en pantallas pequeñas -->
+<div class="table-responsive">
+    <table class="highlight responsive-table striped bordered">
+        <thead>
+            <tr>
+                <th>CHROM</th>
+                <th>POS</th>
+                <th>ID</th>
+                <th>REF</th>
+                <th>ALT</th>
+                <th>QUAL</th>
+                <th>FILTER</th>
+                <th>INFO</th>
+                <th *ngFor="let key of objectKeys(genomes[0]?.OUTPUTS || {})">{{ key }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let genome of genomes">
+                <td>{{ genome.CHROM }}</td>
+                <td>{{ genome.POS }}</td>
+                <td>{{ genome.ID }}</td>
+                <td>{{ genome.REF }}</td>
+                <td>{{ genome.ALT }}</td>
+                <td>{{ genome.QUAL }}</td>
+                <td>{{ genome.FILTER }}</td>
+                <td>{{ genome.INFO }}</td>
+                <td *ngFor="let key of objectKeys(genome.OUTPUTS)">
+                    {{ genome.OUTPUTS[key] }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
