@@ -1,0 +1,37 @@
+<div class="gnome-table">
+  <h2>Lista de Genomas</h2>
+
+  <!-- Campo de búsqueda -->
+  <input type="text" placeholder="Buscar..." />
+
+  <!-- Tabla de resultados filtrados -->
+  <table>
+    <thead>
+      <tr>
+        <th>CHROM</th>
+        <th>POS</th>
+        <th>REF</th>
+        <th>ALT</th>
+        <th>QUAL</th>
+        <th>FILTER</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (gnome of gnomes; track gnome.POS) {
+        <tr>
+          <td>{{ gnome.CHROM }}</td>
+          <td>{{ gnome.POS }}</td>
+          <td>{{ gnome.REF }}</td>
+          <td>{{ gnome.ALT }}</td>
+          <td>{{ gnome.QUAL }}</td>
+          <td>{{ gnome.FILTER }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <!-- Paginacion -->
+  <div class="pagination">
+    <button>Anterior</button>
+    <button>Siguiente</button>
+
+</div>
