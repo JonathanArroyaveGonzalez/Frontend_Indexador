@@ -15,6 +15,8 @@ export class GenomeTableComponent implements OnInit {
   pageSize = 10;
   totalItems = 0;
   loading = false;
+  selectedFilter = '';
+  currentSort = { column: 'CHROM', order: 'ASC' };  // Estado de ordenación por defecto
 
   constructor(private genomeService: GenomeService) { }
 
@@ -26,7 +28,7 @@ export class GenomeTableComponent implements OnInit {
     this.loading = true;
     this.genomeService.getGenomes(this.currentPage, this.pageSize).subscribe({
       next: (data) => {
-        this.genomes = data.map(item => new Genome(item));
+        this.genomes = data.map((item: any) => new Genome(item));
         this.loading = false;
       },
       error: (error) => {
@@ -44,17 +46,66 @@ export class GenomeTableComponent implements OnInit {
   }
 
   changePageSize(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    const size = parseInt(selectElement.value, 10);
-    
-    if (!isNaN(size)) {
-      this.pageSize = size;
-      this.currentPage = 1;
-      this.loadGenomes();
+    const target = event.target as HTMLSelectElement | null;  // Asegúrate de que target no sea null
+    if (target) {
+      const valor = target.value;
+      const size = parseInt(valor, 10);
+      if (!isNaN(size)) {
+        this.pageSize = size;
+        this.currentPage = 1;
+        this.loadGenomes();
+      }
     }
   }
-
+  
+  
   objectKeys(obj: any): string[] {
     return obj ? Object.keys(obj) : [];
+  }
+
+  search() {
+    this.loading = true;
+    const filters = {
+      filter: this.selectedFilter,
+      search: this.searchText
+    };
+    console.log(filters);
+
+    this.genomeService.searchGenomes(filters).subscribe({
+      next: (data) => {
+        this.genomes = data.map((item: any) => new Genome(item));
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al buscar los genomas', error);
+        this.loading = false;
+      }
+    });
+  }
+
+  // Función para manejar la ordenación por columna
+  sort(column: string) {
+    // Si ya estamos ordenando por esta columna, alternamos el orden
+    if (this.currentSort.column === column) {
+      this.currentSort.order = this.currentSort.order === 'ASC' ? 'DESC' : 'ASC';
+    } else {
+      // Si cambiamos de columna, comenzamos con orden ascendente
+      this.currentSort.column = column;
+      this.currentSort.order = 'ASC';
+    }
+    this.loading = true;
+    
+    // Llamada al servicio para obtener los datos ordenados
+    this.genomeService.sortGenomes(this.currentSort.column, this.currentSort.order).subscribe({
+      next: (data) => {
+        this.genomes = data.map((item: any) => new Genome(item));
+        this.loading = false;
+        console.log('Genomas ordenados', data);
+      },
+      error: (error) => {
+        console.error('Error al ordenar los genomas', error);
+        this.loading = false;
+      }
+    });
   }
 }
