@@ -29,7 +29,7 @@
     table-layout: auto;
     border-collapse: collapse;
   }
-  
+
   th, td {
     padding: 8px 12px;
     text-align: left;
@@ -109,13 +109,30 @@
   }
   
   .page-size-selector {
-    display: flex;
+    background-color: #b2a3cc; /* Color de fondo similar a los botones */
+    color: white; /* Texto blanco como los botones */
+    border: none; /* Sin borde para una apariencia más limpia */
+    padding: 8px 16px; /* Espaciado interno consistente */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave al interactuar */
+    display: inline-flex; /* Alineación vertical y horizontal */
     align-items: center;
+    justify-content: center;
+    height: 38px; /* Altura consistente con los botones */
+    max-width: 50px;
+  }
+
+  .fpage-size-selector:hover {
+    background-color: #664299; /* Color más oscuro en hover */
   }
   
-  .page-size-selector select {
-    width: 150px;
+  .page-size-selector:focus {
+    outline: none; /* Elimina el contorno de enfoque predeterminado */
+    box-shadow: 0 0 3px #664299; /* Añade un efecto de sombra */
   }
+  
   
   .btn-primary {
     background-color: #007bff;
@@ -161,3 +178,10 @@
     box-shadow: 0 0 3px #664299; /* Añade un efecto de sombra */
   }
   
+
+  .pagination-container {
+    display: flex ;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+  }
