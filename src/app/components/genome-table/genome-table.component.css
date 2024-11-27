@@ -91,8 +91,9 @@
     align-items: center;
   }
   
-  .page-size-selector select {
-    width: 150px;
+  .page-size-selector {
+    margin-top: 10px;
+    width: 200px;  /* O ajusta según el espacio disponible */
   }
   
   .btn-primary {
@@ -108,3 +109,10 @@
     background-color: #cccccc;
     cursor: not-allowed;
   } 
+
+  select {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+  }
+  

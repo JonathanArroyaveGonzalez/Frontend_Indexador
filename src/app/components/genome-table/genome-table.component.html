@@ -27,6 +27,7 @@
             <th>QUAL</th>
             <th>FILTER</th>
             <th>INFO</th>
+            <th>FORMAT</th>
             <th *ngFor="let key of objectKeys(genomes[0]?.OUTPUTS || {})">
               {{ key }}
             </th>
@@ -42,6 +43,7 @@
             <td>{{ genome.QUAL }}</td>
             <td>{{ genome.FILTER }}</td>
             <td>{{ genome.INFO }}</td>
+            <td>{{ genome.FORMAT}}</td>
             <td *ngFor="let key of objectKeys(genome.OUTPUTS)">
               {{ genome.OUTPUTS[key] }}
             </td>
