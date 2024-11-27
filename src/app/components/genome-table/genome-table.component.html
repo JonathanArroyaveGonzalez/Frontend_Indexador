@@ -16,7 +16,7 @@
     <!-- Botón de búsqueda -->
     <button class="btn btn-search" (click)="search()">Buscar</button>
 
-    <select [(ngModel)]="pageSize" (change)="changePageSize($event)" class="form-control page-size-selector">
+    <select [(ngModel)]="pageSize" (change)="changePageSize()" class="form-control page-size-select">
       <option value="5">5</option>
       <option value="10">10</option>
       <option value="20">20</option>

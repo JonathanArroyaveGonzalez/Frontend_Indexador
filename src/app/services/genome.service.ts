@@ -35,7 +35,7 @@ export class GenomeService {
   }
 
   sortGenomes(params: {
-    column: string, 
+    sort_by: string, 
     order: string, 
     page?: number, 
     page_size?: number,
@@ -43,7 +43,7 @@ export class GenomeService {
     search?: string
   }): Observable<any> {
     const httpParams = new HttpParams()
-      .set('sort_by', params.column)
+      .set('sort_by', params.sort_by)
       .set('order', params.order)
       .set('page', (params.page || 1).toString())
       .set('page_size', (params.page_size || 10).toString());
@@ -53,6 +53,7 @@ export class GenomeService {
       httpParams.set('filter', params.filter);
       httpParams.set('search', params.search);
     }
+    console.log(httpParams);
 
     return this.http.get<any>(`${this.apiUrl}sort`, { params: httpParams });
   }

@@ -25,11 +25,11 @@ export class GenomeTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadGenomes();
+    
   }
 
   loadGenomes() {
     this.loading = true;
-    
     // Check if there's an active search
     if (this.currentSearchParams) {
       this.performSearch(this.currentSearchParams);
@@ -55,17 +55,9 @@ export class GenomeTableComponent implements OnInit {
     }
   }
 
-  changePageSize(event: Event) {
-    const target = event.target as HTMLSelectElement | null;
-    if (target) {
-      const valor = target.value;
-      const size = parseInt(valor, 10);
-      if (!isNaN(size)) {
-        this.pageSize = size;
-        this.currentPage = 1;
-        this.loadGenomes();
-      }
-    }
+  changePageSize() {
+    this.currentPage = 1;  // Reset to first page
+    this.loadGenomes();
   }
   
   objectKeys(obj: any): string[] {
@@ -128,6 +120,7 @@ export class GenomeTableComponent implements OnInit {
       sortParams.filter = this.currentSearchParams.filter;
       sortParams.search = this.currentSearchParams.search;
     }
+
 
     this.genomeService.sortGenomes(sortParams).subscribe({
       next: (data) => {

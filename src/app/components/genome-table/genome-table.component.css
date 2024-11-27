@@ -108,7 +108,7 @@
     color: #666;
   }
   
-  .page-size-selector {
+  .page-size-select {
     background-color: #b2a3cc; /* Color de fondo similar a los botones */
     color: white; /* Texto blanco como los botones */
     border: none; /* Sin borde para una apariencia más limpia */
@@ -121,38 +121,18 @@
     align-items: center;
     justify-content: center;
     height: 38px; /* Altura consistente con los botones */
-    max-width: 50px;
+    max-width: 80px;
   }
 
-  .fpage-size-selector:hover {
+  .page-size-select:hover {
     background-color: #664299; /* Color más oscuro en hover */
   }
   
-  .page-size-selector:focus {
+  .page-size-select:focus {
     outline: none; /* Elimina el contorno de enfoque predeterminado */
     box-shadow: 0 0 3px #664299; /* Añade un efecto de sombra */
   }
   
-  
-  .btn-primary {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-primary:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  } 
-
-  .navbar {
-    color: white;
-    padding: 10px 0;
-  }
-
   .filter-select {
     background-color: #b2a3cc; /* Color de fondo similar a los botones */
     color: white; /* Texto blanco como los botones */
@@ -178,6 +158,26 @@
     box-shadow: 0 0 3px #664299; /* Añade un efecto de sombra */
   }
   
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-primary:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  } 
+
+  .navbar {
+    color: white;
+    padding: 10px 0;
+  }
+
 
   .pagination-container {
     display: flex ;
