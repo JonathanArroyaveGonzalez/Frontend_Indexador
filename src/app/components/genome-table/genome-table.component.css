@@ -4,7 +4,10 @@
   }
   
   .search-container {
-    margin-bottom: 15px;
+    display: flex ;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
   }
   
   .search-input {
@@ -71,8 +74,27 @@
     height: 38px;  /* Opcional: establece una altura fija */
     vertical-align: middle;
   }
+
+  .btn-search {
+    background-color: #b2a3cc;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+    display: inline-flex;  /* Añade esta línea */
+    align-items: center;   /* Añade esta línea */
+    justify-content: center;  /* Añade esta línea */
+    height: 38px;  /* Opcional: establece una altura fija */
+    vertical-align: middle;
+  }
   
   .btn-pagination:hover:not(:disabled) {
+    background-color: #664299;  /* Un tono ligeramente más oscuro para el hover */
+  }
+
+  .btn-search:hover:not(:disabled) {
     background-color: #664299;  /* Un tono ligeramente más oscuro para el hover */
   }
   
@@ -108,3 +130,34 @@
     background-color: #cccccc;
     cursor: not-allowed;
   } 
+
+  .navbar {
+    color: white;
+    padding: 10px 0;
+  }
+
+  .filter-select {
+    background-color: #b2a3cc; /* Color de fondo similar a los botones */
+    color: white; /* Texto blanco como los botones */
+    border: none; /* Sin borde para una apariencia más limpia */
+    padding: 8px 16px; /* Espaciado interno consistente */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave al interactuar */
+    display: inline-flex; /* Alineación vertical y horizontal */
+    align-items: center;
+    justify-content: center;
+    height: 38px; /* Altura consistente con los botones */
+    max-width: 100px;
+  }
+  
+  .filter-select:hover {
+    background-color: #664299; /* Color más oscuro en hover */
+  }
+  
+  .filter-select:focus {
+    outline: none; /* Elimina el contorno de enfoque predeterminado */
+    box-shadow: 0 0 3px #664299; /* Añade un efecto de sombra */
+  }
+  

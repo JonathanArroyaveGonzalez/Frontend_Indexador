@@ -7,6 +7,7 @@ export class Genome {
     QUAL: string;
     FILTER: string;
     INFO: string;
+    FORMAT: string;
     OUTPUTS: { [key: string]: string };
   
     constructor(data: any) {
@@ -18,6 +19,7 @@ export class Genome {
       this.QUAL = data.QUAL || '';
       this.FILTER = data.FILTER || '';
       this.INFO = data.INFO || '';
+      this.FORMAT = data.FORMAT || '';
       this.OUTPUTS = {};
   
       // Asignar los outputs dinámicamente si existen

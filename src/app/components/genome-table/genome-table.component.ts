@@ -15,6 +15,7 @@ export class GenomeTableComponent implements OnInit {
   pageSize = 10;
   totalItems = 0;
   loading = false;
+  selectedFilter = '';
 
   constructor(private genomeService: GenomeService) { }
 
@@ -26,7 +27,7 @@ export class GenomeTableComponent implements OnInit {
     this.loading = true;
     this.genomeService.getGenomes(this.currentPage, this.pageSize).subscribe({
       next: (data) => {
-        this.genomes = data.map(item => new Genome(item));
+        this.genomes = data.map((item: any) => new Genome(item));
         this.loading = false;
       },
       error: (error) => {
@@ -56,5 +57,45 @@ export class GenomeTableComponent implements OnInit {
 
   objectKeys(obj: any): string[] {
     return obj ? Object.keys(obj) : [];
+  }
+
+  search() {
+    this.loading = true;
+    const filters = {
+      filter: this.selectedFilter,
+      search: this.searchText
+    };
+    console.log(filters);
+
+    this.genomeService.searchGenomes(filters).subscribe({
+      next: (data) => {
+        this.genomes = data.map((item: any) => new Genome(item));
+        this.loading = false;
+
+
+      },
+      error: (error) => {
+        console.error('Error al buscar los genomas', error);
+        this.loading = false;
+      }
+    });
+  }
+
+
+
+
+
+  sort(column: string) {
+    this.loading = true;
+    this.genomeService.sortGenomes(column, 'ASC').subscribe({
+      next: (data) => {
+        this.genomes = data.map((item: any) => new Genome(item));
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al ordenar los genomas', error);
+        this.loading = false;
+      }
+    });
   }
 }
