@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { GenomeTableComponent } from './components/genome-table/genome-table.component';
 
 const routes: Routes = [
+  {
+    path: '', redirectTo: '/genome-table', pathMatch: 'full'
+  },
   { path: 'genome-table', component: GenomeTableComponent }
 
 ];

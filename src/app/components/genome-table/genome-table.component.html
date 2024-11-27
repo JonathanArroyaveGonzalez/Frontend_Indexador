@@ -33,6 +33,7 @@
     <table class="table table-striped table-hover">
       <thead>
         <tr>
+          <th> N°</th>
           <th (click)="sort('CHROM')">CHROM</th>
           <th (click)="sort('POS')">POS</th>
           <th (click)="sort('ID')">ID</th>
@@ -49,7 +50,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let genome of genomes">
+        <tr *ngFor="let genome of genomes; let i = index">
+          <td>{{  i+ 1  }}</td>
           <td>{{ genome.CHROM }}</td>
           <td>{{ genome.POS }}</td>
           <td>{{ genome.ID }}</td>
