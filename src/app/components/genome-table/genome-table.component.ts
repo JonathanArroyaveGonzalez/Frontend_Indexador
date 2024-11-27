@@ -15,8 +15,11 @@ export class GenomeTableComponent implements OnInit {
   pageSize = 10;
   totalItems = 0;
   loading = false;
-  selectedFilter = '';
-  currentSort = { column: 'CHROM', order: 'ASC' };  // Estado de ordenación por defecto
+  selectedFilter = 'CHROM';  // Default filter
+  currentSort = { column: 'CHROM', order: 'ASC' };  // Default sort
+  
+  // New property to track the current search state
+  currentSearchParams: { filter: string, search: string } | null = null;
 
   constructor(private genomeService: GenomeService) { }
 
@@ -26,16 +29,23 @@ export class GenomeTableComponent implements OnInit {
 
   loadGenomes() {
     this.loading = true;
-    this.genomeService.getGenomes(this.currentPage, this.pageSize).subscribe({
-      next: (data) => {
-        this.genomes = data.map((item: any) => new Genome(item));
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error al cargar los genomas', error);
-        this.loading = false;
-      }
-    });
+    
+    // Check if there's an active search
+    if (this.currentSearchParams) {
+      this.performSearch(this.currentSearchParams);
+    } else {
+      // Regular load of genomes
+      this.genomeService.getGenomes(this.currentPage, this.pageSize).subscribe({
+        next: (data) => {
+          this.genomes = data.map((item: any) => new Genome(item));
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error al cargar los genomas', error);
+          this.loading = false;
+        }
+      });
+    }
   }
 
   changePage(newPage: number) {
@@ -46,7 +56,7 @@ export class GenomeTableComponent implements OnInit {
   }
 
   changePageSize(event: Event) {
-    const target = event.target as HTMLSelectElement | null;  // Asegúrate de que target no sea null
+    const target = event.target as HTMLSelectElement | null;
     if (target) {
       const valor = target.value;
       const size = parseInt(valor, 10);
@@ -58,7 +68,6 @@ export class GenomeTableComponent implements OnInit {
     }
   }
   
-  
   objectKeys(obj: any): string[] {
     return obj ? Object.keys(obj) : [];
   }
@@ -69,9 +78,20 @@ export class GenomeTableComponent implements OnInit {
       filter: this.selectedFilter,
       search: this.searchText
     };
-    console.log(filters);
+    
+    // Store the current search parameters
+    this.currentSearchParams = filters;
+    this.currentPage = 1;  // Reset to first page
+    
+    this.performSearch(filters);
+  }
 
-    this.genomeService.searchGenomes(filters).subscribe({
+  private performSearch(filters: { filter: string, search: string }) {
+    this.genomeService.searchGenomes({
+      ...filters,
+      page: this.currentPage,
+      page_size: this.pageSize
+    }).subscribe({
       next: (data) => {
         this.genomes = data.map((item: any) => new Genome(item));
         this.loading = false;
@@ -85,22 +105,34 @@ export class GenomeTableComponent implements OnInit {
 
   // Función para manejar la ordenación por columna
   sort(column: string) {
-    // Si ya estamos ordenando por esta columna, alternamos el orden
+    // If already sorting by this column, toggle order
     if (this.currentSort.column === column) {
       this.currentSort.order = this.currentSort.order === 'ASC' ? 'DESC' : 'ASC';
     } else {
-      // Si cambiamos de columna, comenzamos con orden ascendente
+      // If changing column, start with ascending order
       this.currentSort.column = column;
       this.currentSort.order = 'ASC';
     }
     this.loading = true;
     
-    // Llamada al servicio para obtener los datos ordenados
-    this.genomeService.sortGenomes(this.currentSort.column, this.currentSort.order).subscribe({
+    // Call service to get sorted data, respecting current search state
+    const sortParams: any = {
+      sort_by: this.currentSort.column,
+      order: this.currentSort.order,
+      page: this.currentPage,
+      page_size: this.pageSize
+    };
+
+    // Add search parameters if a search is active
+    if (this.currentSearchParams) {
+      sortParams.filter = this.currentSearchParams.filter;
+      sortParams.search = this.currentSearchParams.search;
+    }
+
+    this.genomeService.sortGenomes(sortParams).subscribe({
       next: (data) => {
         this.genomes = data.map((item: any) => new Genome(item));
         this.loading = false;
-        console.log('Genomas ordenados', data);
       },
       error: (error) => {
         console.error('Error al ordenar los genomas', error);

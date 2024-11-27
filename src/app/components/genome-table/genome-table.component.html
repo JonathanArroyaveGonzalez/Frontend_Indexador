@@ -9,6 +9,13 @@
       <option value="FORMAT">Format</option>
     </select>
 
+
+    <!-- Campo de búsqueda -->
+    <input type="text" [(ngModel)]="searchText" placeholder="Buscar" class="form-control search-input">
+
+    <!-- Botón de búsqueda -->
+    <button class="btn btn-search" (click)="search()">Buscar</button>
+
     <select [(ngModel)]="pageSize" (change)="changePageSize($event)" class="form-control page-size-selector">
       <option value="5">5</option>
       <option value="10">10</option>
@@ -16,13 +23,6 @@
       <option value="50">50</option>
       <option value="100">100</option>
     </select>
-  
-
-    <!-- Campo de búsqueda -->
-    <input type="text" [(ngModel)]="searchText" placeholder="Buscar" class="form-control search-input">
-
-    <!-- Botón de búsqueda -->
-    <button class="btn btn-search" (click)="search()">Buscar</button>
   </div>
 
   <div *ngIf="loading" class="loading-container">
