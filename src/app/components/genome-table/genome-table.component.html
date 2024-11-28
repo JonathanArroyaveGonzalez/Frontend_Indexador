@@ -9,7 +9,6 @@
       <option value="FORMAT">Format</option>
     </select>
 
-
     <!-- Campo de búsqueda -->
     <input type="text" [(ngModel)]="searchText" placeholder="Buscar" class="form-control search-input">
 
@@ -67,6 +66,11 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Mostrar tiempo de búsqueda -->
+  <div *ngIf="!loading" class="search-time-container">
+    <p>Tiempo de búsqueda: {{ searchTime | number:'1.0-2' }} ms</p>
   </div>
 
   <!-- Controles de paginación -->

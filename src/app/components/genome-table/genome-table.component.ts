@@ -17,6 +17,7 @@ export class GenomeTableComponent implements OnInit {
   loading = false;
   selectedFilter = 'CHROM';  // Default filter
   currentSort = { column: 'CHROM', order: 'ASC' };  // Default sort
+  searchTime = 0;  // Variable para almacenar el tiempo de búsqueda
   
   // New property to track the current search state
   currentSearchParams: { filter: string, search: string } | null = null;
@@ -65,6 +66,7 @@ export class GenomeTableComponent implements OnInit {
   }
 
   search() {
+    const startTime = performance.now();
     this.loading = true;
     const filters = {
       filter: this.selectedFilter,
@@ -76,6 +78,12 @@ export class GenomeTableComponent implements OnInit {
     this.currentPage = 1;  // Reset to first page
     
     this.performSearch(filters);
+    // Simulación de búsqueda
+    setTimeout(() => {
+      this.loading = false;
+      const endTime = performance.now();
+      this.searchTime = endTime - startTime;
+    }, 1000); // Simulación de 1 segundo de búsqueda
   }
 
   private performSearch(filters: { filter: string, search: string }) {
