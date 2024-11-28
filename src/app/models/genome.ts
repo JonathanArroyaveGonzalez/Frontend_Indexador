@@ -28,7 +28,7 @@ export class Genome {
   
     private assignOutputs(data: any): void {
       for (let key in data) {
-        if (key.startsWith('output_CH')) {
+        if (key.startsWith('output_')) {
           this.OUTPUTS[key] = data[key];
         }
       }
