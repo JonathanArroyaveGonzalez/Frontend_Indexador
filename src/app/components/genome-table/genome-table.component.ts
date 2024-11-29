@@ -42,7 +42,9 @@ export class GenomeTableComponent implements OnInit {
       // Regular load of genomes
       this.genomeService.getGenomes(this.currentPage, this.pageSize).subscribe({
         next: (data) => {
-          this.genomes = data.map((item: any) => new Genome(item));
+          this.genomes = data["data"].map((item: any) => new Genome(item));
+          this.searchTime = data["process_time"];
+          console.log(data);
           this.loading = false;
         },
         error: (error) => {
@@ -54,15 +56,10 @@ export class GenomeTableComponent implements OnInit {
   }
 
   changePage(newPage: number) {
-    const startTime = performance.now();
     if (newPage > 0) {
       this.currentPage = newPage;
       this.loadGenomes();
     }
-    setTimeout(() => {
-      const endTime = performance.now();
-      this.searchTime = endTime - startTime;
-    });
   }
 
   changePageSize() {
@@ -75,7 +72,6 @@ export class GenomeTableComponent implements OnInit {
   }
 
   search() {
-    const startTime = performance.now();
     this.loading = true;
     const filters = {
       filter: this.selectedFilter,
@@ -87,12 +83,6 @@ export class GenomeTableComponent implements OnInit {
     this.currentPage = 1;  // Reset to first page
     
     this.performSearch(filters);
-    // Simulación de búsqueda
-    setTimeout(() => {
-      this.loading = false;
-      const endTime = performance.now();
-      this.searchTime = endTime - startTime;
-    }); // Simulación de 1 segundo de búsqueda
   }
 
   private performSearch(filters: { filter: string, search: string }) {
@@ -102,7 +92,9 @@ export class GenomeTableComponent implements OnInit {
       page_size: this.pageSize
     }).subscribe({
       next: (data) => {
-        this.genomes = data.map((item: any) => new Genome(item));
+        this.genomes = data["data"].map((item: any) => new Genome(item));
+        this.searchTime = data["process_time"];
+        console.log(data);
         this.loading = false;
       },
       error: (error) => {
@@ -114,7 +106,6 @@ export class GenomeTableComponent implements OnInit {
 
   // Función para manejar la ordenación por columna
   sort(column: string) {
-    const startTime = performance.now();
     // If already sorting by this column, toggle order
     if (this.currentSort.column === column) {
       this.currentSort.order = this.currentSort.order === 'ASC' ? 'DESC' : 'ASC';
@@ -142,17 +133,14 @@ export class GenomeTableComponent implements OnInit {
 
     this.genomeService.sortGenomes(sortParams).subscribe({
       next: (data) => {
-        this.genomes = data.map((item: any) => new Genome(item));
+        this.genomes = data["data"].map((item: any) => new Genome(item));
+        this.searchTime = data["process_time"];
         this.loading = false;
       },
       error: (error) => {
         console.error('Error al ordenar los genomas', error);
         this.loading = false;
       }
-    });
-    setTimeout(() => {
-      const endTime = performance.now();
-      this.searchTime = endTime - startTime;
     });
   }
 

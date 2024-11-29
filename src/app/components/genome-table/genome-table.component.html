@@ -72,7 +72,7 @@
   <!-- Controles de paginación -->
   <div class="pagination-container">
     <div *ngIf="!loading" class="search-time-container">
-      <p>Tiempo de búsqueda: {{ searchTime | number:'1.0-2' }} ms</p>
+      <p>Tiempo de búsqueda: {{ searchTime }} seg.</p>
     </div>
     <div class="pagination-controls text-center w-100">
       <button class="btn btn-pagination" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">

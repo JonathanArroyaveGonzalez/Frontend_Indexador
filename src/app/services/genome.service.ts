@@ -20,9 +20,9 @@ export class GenomeService {
   }
 
   searchGenomes(filters: {
-    filter: string, 
-    search: string, 
-    page?: number, 
+    filter: string,
+    search: string,
+    page?: number,
     page_size?: number
   }): Observable<any> {
     const params = new HttpParams()
@@ -35,14 +35,14 @@ export class GenomeService {
   }
 
   sortGenomes(params: {
-    sort_by: string, 
-    order: string, 
-    page?: number, 
+    sort_by: string,
+    order: string,
+    page?: number,
     page_size?: number,
     filter?: string,
     search?: string
   }): Observable<any> {
-    const httpParams = new HttpParams()
+    let httpParams = new HttpParams()
       .set('sort_by', params.sort_by)
       .set('order', params.order)
       .set('page', (params.page || 1).toString())
@@ -50,11 +50,10 @@ export class GenomeService {
 
     // Añadir parámetros de búsqueda si están presentes
     if (params.filter && params.search) {
-      httpParams.set('filter', params.filter);
-      httpParams.set('search', params.search);
+      httpParams = httpParams
+        .set('filter', params.filter)
+        .set('search', params.search);
     }
-    console.log(httpParams);
-
     return this.http.get<any>(`${this.apiUrl}sort`, { params: httpParams });
   }
 
