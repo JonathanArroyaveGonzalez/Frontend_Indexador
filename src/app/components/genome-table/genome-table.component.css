@@ -185,3 +185,13 @@
     gap: 10px;
     margin-bottom: 5px;
   }
+
+  .search-time-container {
+    display: flex ;
+    gap: 10px;
+    margin-bottom: 5px;
+    justify-content: flex-start;
+    position: absolute;
+    left: 0;
+    margin-left: 20px;
+  }

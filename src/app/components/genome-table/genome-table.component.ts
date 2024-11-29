@@ -15,8 +15,8 @@ export class GenomeTableComponent implements OnInit {
   pageSize = 10;
   totalItems = 0;
   loading = false;
-  selectedFilter = 'CHROM';  // Default filter
-  currentSort = { column: 'CHROM', order: 'ASC' };  // Default sort
+  selectedFilter = '';  // Default filter
+  currentSort = { column: '', order: 'ASC' };  // Default sort
   searchTime = 0;  // Variable para almacenar el tiempo de búsqueda
   
   // New property to track the current search state
@@ -27,6 +27,10 @@ export class GenomeTableComponent implements OnInit {
   ngOnInit(): void {
     this.loadGenomes();
     
+  }
+
+  ngOnDestroy(): void {
+    this.clearData();
   }
 
   loadGenomes() {
@@ -50,10 +54,15 @@ export class GenomeTableComponent implements OnInit {
   }
 
   changePage(newPage: number) {
+    const startTime = performance.now();
     if (newPage > 0) {
       this.currentPage = newPage;
       this.loadGenomes();
     }
+    setTimeout(() => {
+      const endTime = performance.now();
+      this.searchTime = endTime - startTime;
+    });
   }
 
   changePageSize() {
@@ -83,7 +92,7 @@ export class GenomeTableComponent implements OnInit {
       this.loading = false;
       const endTime = performance.now();
       this.searchTime = endTime - startTime;
-    }, 1000); // Simulación de 1 segundo de búsqueda
+    }); // Simulación de 1 segundo de búsqueda
   }
 
   private performSearch(filters: { filter: string, search: string }) {
@@ -105,6 +114,7 @@ export class GenomeTableComponent implements OnInit {
 
   // Función para manejar la ordenación por columna
   sort(column: string) {
+    const startTime = performance.now();
     // If already sorting by this column, toggle order
     if (this.currentSort.column === column) {
       this.currentSort.order = this.currentSort.order === 'ASC' ? 'DESC' : 'ASC';
@@ -140,5 +150,21 @@ export class GenomeTableComponent implements OnInit {
         this.loading = false;
       }
     });
+    setTimeout(() => {
+      const endTime = performance.now();
+      this.searchTime = endTime - startTime;
+    });
+  }
+
+  clearData(): void {
+    this.genomes = [];
+    this.searchText = '';
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.totalItems = 0;
+    this.loading = false;
+    this.selectedFilter = '';
+    this.currentSort = { column: '', order: 'ASC' };
+    this.searchTime = 0;
   }
 }
