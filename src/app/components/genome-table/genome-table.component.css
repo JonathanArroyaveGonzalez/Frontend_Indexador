@@ -1,6 +1,7 @@
 .genome-table-container {
     width: 100%;
     padding: 15px;
+    margin-bottom: 40px;
   }
   
   .search-container {
@@ -52,6 +53,7 @@
     align-items: center;
     width: 100%;
     margin-top: 15px;
+    margin-bottom: 60px;
   }
   
   .pagination-controls {
@@ -194,4 +196,6 @@
     position: absolute;
     left: 0;
     margin-left: 20px;
+    font-weight: bold;
+    color: #666;
   }

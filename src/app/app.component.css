@@ -4,6 +4,21 @@
 .content {
     background: #f3e5f5; /* Fondo de color lila claro */
     color: #333333; /* Color del texto (oscuro para contraste) */
-    background: #f3e5f5;
+    position: fixed;
   }
   
+
+/*
+footer totalmente abajo
+*/
+
+.Footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+  }
+  
+  /* Estilo para el contenedor de contenido principal */

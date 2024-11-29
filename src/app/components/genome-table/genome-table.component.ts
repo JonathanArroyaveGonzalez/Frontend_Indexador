@@ -44,7 +44,6 @@ export class GenomeTableComponent implements OnInit {
         next: (data) => {
           this.genomes = data["data"].map((item: any) => new Genome(item));
           this.searchTime = data["process_time"];
-          console.log(data);
           this.loading = false;
         },
         error: (error) => {
@@ -94,7 +93,6 @@ export class GenomeTableComponent implements OnInit {
       next: (data) => {
         this.genomes = data["data"].map((item: any) => new Genome(item));
         this.searchTime = data["process_time"];
-        console.log(data);
         this.loading = false;
       },
       error: (error) => {
