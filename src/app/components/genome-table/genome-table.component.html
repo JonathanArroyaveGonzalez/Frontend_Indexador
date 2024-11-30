@@ -11,7 +11,8 @@
 
 
     <!-- Campo de búsqueda -->
-    <input type="text" [(ngModel)]="searchText" placeholder="Buscar" class="form-control search-input">
+    <input type="text" [(ngModel)]="searchText" placeholder="Buscar" class="form-control search-input"
+      (keyup.enter)="search()">
 
     <!-- Botón de búsqueda -->
     <button class="btn btn-search" (click)="search()">Buscar</button>
@@ -44,14 +45,14 @@
           <th (click)="sort('INFO')">INFO</th>
           <th (click)="sort('FORMAT')">FORMAT</th>
 
-          <th *ngFor="let key of objectKeys(genomes[0]?.OUTPUTS || {})" (click)="sort(key)">
+          <th *ngFor="let key of objectKeys(genomes[0]?.outputs || {})" (click)="sort(key)">
             {{ key }}
           </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let genome of genomes; let i = index">
-          <td>{{  i+ 1  }}</td>
+          <td>{{ i+ 1 }}</td>
           <td>{{ genome.CHROM }}</td>
           <td>{{ genome.POS }}</td>
           <td>{{ genome.ID }}</td>
@@ -61,8 +62,8 @@
           <td>{{ genome.FILTER }}</td>
           <td>{{ genome.INFO }}</td>
           <td>{{ genome.FORMAT }}</td>
-          <td *ngFor="let key of objectKeys(genome.OUTPUTS)">
-            {{ genome.OUTPUTS[key] }}
+          <td *ngFor="let key of objectKeys(genome.outputs)">
+            {{ genome.outputs[key] }}
           </td>
         </tr>
       </tbody>

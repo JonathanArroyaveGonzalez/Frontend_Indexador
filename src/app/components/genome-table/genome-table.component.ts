@@ -102,42 +102,39 @@ export class GenomeTableComponent implements OnInit {
     });
   }
 
-  // Función para manejar la ordenación por columna
+  // Función para manejar la ordenación por columna solo de los resultados que hay actualmente en pantalla
   sort(column: string) {
     // If already sorting by this column, toggle order
     if (this.currentSort.column === column) {
       this.currentSort.order = this.currentSort.order === 'ASC' ? 'DESC' : 'ASC';
     } else {
-      // If changing column, start with ascending order
       this.currentSort.column = column;
       this.currentSort.order = 'ASC';
     }
-    this.loading = true;
-    
-    // Call service to get sorted data, respecting current search state
-    const sortParams: any = {
-      sort_by: this.currentSort.column,
-      order: this.currentSort.order,
-      page: this.currentPage,
-      page_size: this.pageSize
-    };
 
-    // Add search parameters if a search is active
-    if (this.currentSearchParams) {
-      sortParams.filter = this.currentSearchParams.filter;
-      sortParams.search = this.currentSearchParams.search;
-    }
+    // Sort the genomes array
+    this.genomes.sort((a, b) => {
+      let valueA = a[column];
+      let valueB = b[column];
 
+      // Check if the column is within the outputs object
+      if (column.startsWith('output_')) {
+        valueA = a.outputs[column];
+        valueB = b.outputs[column];
+      }
 
-    this.genomeService.sortGenomes(sortParams).subscribe({
-      next: (data) => {
-        this.genomes = data["data"].map((item: any) => new Genome(item));
-        this.searchTime = data["process_time"];
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error al ordenar los genomas', error);
-        this.loading = false;
+      // Convert to numbers if the column is 'QUAL' or 'POS'
+      if (column === 'QUAL' || column === 'POS') {
+        valueA = parseFloat(valueA);
+        valueB = parseFloat(valueB);
+      }
+
+      if (valueA < valueB) {
+        return this.currentSort.order === 'ASC' ? -1 : 1;
+      } else if (valueA > valueB) {
+        return this.currentSort.order === 'ASC' ? 1 : -1;
+      } else {
+        return 0;
       }
     });
   }
