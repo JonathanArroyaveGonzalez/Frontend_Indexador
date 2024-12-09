@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: `Hola tu registro fue exitoso, revisa tu correo y sigue las intrucciones. ¡Bienvenido!`,
+            title: `Hola ${datos.name} tu registro fue exitoso, revisa tu correo y sigue las intrucciones. ¡Bienvenido!`,
             showConfirmButton: false,
             timer: 1000
           });
@@ -88,16 +88,28 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.signInForm.valid) {
       const datos = this.ConstruirDatos(0);
 
-      if (datos.token === 'Hkxvsadewad') {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Bienvenido de nuevo.",
-          showConfirmButton: false,
-          timer: 1000
-        });
-        this.router.navigate(['/genome-table']);
-      }
+      this.servicioSeguridad.loginUser(datos).subscribe({
+        next: (respuesta: any) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Bienvenido de nuevo.",
+            showConfirmButton: false,
+            timer: 3000
+          });
+          this.router.navigate(['/genome-table']);
+        },
+        error: (err: HttpErrorResponse) => {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Se ha producido un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.",
+            showConfirmButton: false,
+            timer: 3000
+          });
+        }
+      });
+
     }
   }
 
@@ -117,12 +129,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ConstruirDatos(tipo: number) {
     if (tipo === 1) {
       return {
-        username: this.signUpForm.get('nombre')?.value,
+        name: this.signUpForm.get('nombre')?.value,
         email: this.signUpForm.get('email')?.value,
       };
     } else {
       return {
-        usuario: this.signInForm.get('usuario')?.value,
+        email: this.signInForm.get('usuario')?.value,
         token: this.signInForm.get('token')?.value
       };
     }
