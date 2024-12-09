@@ -21,6 +21,7 @@
     "gnoma-frontend": "file:",
     "materialize-css": "^1.0.0",
     "rxjs": "~7.5.0",
+    "sweetalert2": "^11.14.5",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

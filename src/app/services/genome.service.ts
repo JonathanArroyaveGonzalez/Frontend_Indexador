@@ -8,8 +8,12 @@ import { environment } from 'src/environments/environment';
 })
 export class GenomeService {
   private apiUrl = environment.apiUrl;
-
+  private apiRegister = environment.apiRegister;
   constructor(private http: HttpClient) { }
+
+  registerUser(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiRegister}register2`, data);
+  }
 
   getGenomes(page: number, pageSize: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}all`, {
