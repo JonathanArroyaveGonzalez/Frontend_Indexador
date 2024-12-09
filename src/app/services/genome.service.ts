@@ -12,7 +12,19 @@ export class GenomeService {
   constructor(private http: HttpClient) { }
 
   registerUser(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiRegister}register2`, data);
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+
+    return this.http.post<any>(`${this.apiRegister}register`, formData);
+  }
+
+  loginUser(data: any): Observable<any> {
+    const formData = new FormData();
+    formData.append('email', data.email);
+    formData.append('token', data.token);
+
+    return this.http.post<any>(`${this.apiRegister}login`, formData);
   }
 
   getGenomes(page: number, pageSize: number): Observable<any> {
