@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -9,6 +9,15 @@ import { environment } from 'src/environments/environment';
 export class GenomeService {
   private apiUrl = environment.apiUrl;
   private apiRegister = environment.apiRegister;
+  
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'ngrok-skip-browser-warning': 'true'
+    })
+  };
+
   constructor(private http: HttpClient) { }
 
   registerUser(data: any): Observable<any> {
@@ -31,7 +40,8 @@ export class GenomeService {
     return this.http.get<any>(`${this.apiUrl}all`, {
       params: new HttpParams()
         .set('page', page.toString())
-        .set('page_size', pageSize.toString())
+        .set('page_size', pageSize.toString()),
+      headers: this.httpOptions.headers
     });
   }
 
@@ -47,7 +57,10 @@ export class GenomeService {
       .set('page', (filters.page || 1).toString())
       .set('page_size', (filters.page_size || 10).toString());
 
-    return this.http.get<any>(`${this.apiUrl}search`, { params });
+    return this.http.get<any>(`${this.apiUrl}search`, { 
+      params,
+      headers: this.httpOptions.headers
+    });
   }
 
   sortGenomes(params: {
@@ -64,13 +77,16 @@ export class GenomeService {
       .set('page', (params.page || 1).toString())
       .set('page_size', (params.page_size || 10).toString());
 
-    // Añadir parámetros de búsqueda si están presentes
     if (params.filter && params.search) {
       httpParams = httpParams
         .set('filter', params.filter)
         .set('search', params.search);
     }
-    return this.http.get<any>(`${this.apiUrl}sort`, { params: httpParams });
+    
+    return this.http.get<any>(`${this.apiUrl}sort`, { 
+      params: httpParams,
+      headers: this.httpOptions.headers
+    });
   }
 
   checkServer(): Observable<any> {
