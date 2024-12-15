@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8000/genome/',
-  apiRegister: 'http://localhost:8000/login/'
+  apiUrl: 'https://lively-sound-mosquito.ngrok-free.app/genome/',
+  apiRegister: 'https://lively-sound-mosquito.ngrok-free.app/login/'
 };
